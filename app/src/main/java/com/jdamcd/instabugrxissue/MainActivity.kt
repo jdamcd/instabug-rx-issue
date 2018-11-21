@@ -6,7 +6,6 @@ import android.widget.Toast
 import io.reactivex.Single
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
-import java.lang.RuntimeException
 
 class MainActivity : AppCompatActivity() {
 
@@ -26,13 +25,7 @@ class MainActivity : AppCompatActivity() {
         return Single.just("result")
                 .subscribe({
                     toast("onSuccess: $it")
-                    doSomethingWrong()
-                    toast("This code never executes, but the app didn't halt, so we're left in a non-deterministic state")
                 }, { e -> toast("onError: ${e.message}") })
-    }
-
-    private fun doSomethingWrong() {
-        throw RuntimeException("This should crash the main thread but is silently swallowed")
     }
 
     override fun onPause() {
